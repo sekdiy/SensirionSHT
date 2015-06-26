@@ -1,0 +1,29 @@
+#######################################
+# Syntax Coloring Map For Relay
+#######################################
+
+#######################################
+# Datatypes (KEYWORD1)
+#######################################
+
+SensirionSHT	 KEYWORD1
+
+#######################################
+# Methods and Functions (KEYWORD2)
+#######################################
+
+SensirionSHT	 KEYWORD2
+getTemperature	 KEYWORD2
+getHumidity	 KEYWORD2
+getDewpoint	 KEYWORD2
+tick	 KEYWORD2
+isReady  KEYWORD2
+
+#######################################
+# Instances (KEYWORD2)
+#######################################
+
+#######################################
+# Constants (LITERAL1)
+#######################################
+
