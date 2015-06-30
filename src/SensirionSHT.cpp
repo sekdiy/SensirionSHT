@@ -16,7 +16,7 @@
 #include <SensirionSHT.h>
 
 /**
- *
+ * TODO documentation...
  */
 SensirionSHT::SensirionSHT(unsigned int dataPin, unsigned int clockPin, float period)
   : Sensirion(dataPin, clockPin), _period(period), _duration(period) {
@@ -73,12 +73,12 @@ unsigned int SensirionSHT::tick(float duration) {
         error = this->meas(this->_mode, &this->_data, NONBLOCK);// initiate a new measurement
         break;
       case HUMI:                                                // humidity measurement
-        this->_humidity = this->calcHumi(this->_data, this->_temperature);            // store humidity value
+        this->_humidity = this->calcHumi(this->_data, this->_temperature); // store humidity value
         this->_ready = true;                                    // mark measurement cycle as completed
         this->_fresh = true;                                    // mark new results as fresh
         break;
     }
   }
 
-  return error;
+  return error;                                                 // pass on possible sensor communication errors
 }
