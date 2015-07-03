@@ -15,8 +15,10 @@
 #ifndef SENSIRIONSHT_H
 #define SENSIRIONSHT_H
 
-class SensirionSHT: public Sensirion
-{
+#include <math.h>
+#include <Sensirion.h>        // http://playground.arduino.cc/Code/Sensirion
+
+class SensirionSHT: public Sensirion {
   public:
 
     SensirionSHT(unsigned int dataPin,  //!< Arduino pin that the sensor's data line is connected to.
