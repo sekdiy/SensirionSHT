@@ -28,4 +28,4 @@
 *.app
 
 # HTML documentation 
-doc/html/*
+doc/html/

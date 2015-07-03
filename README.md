@@ -4,8 +4,6 @@
 
 **SensirionSHT** is an Arduino library that provides easy,  non-blocking access to [Sensirion SHT1x](http://www.sensirion.com/en/products/humidity-temperature) temperature and humidity sensors (and compatible).
 
-It also qualifies for a *synchronous* approach at running tasks on an Arduino.
-
 ## Simple Example ##
 
 **SensirionSHT** works completely non-blocking:
@@ -27,10 +25,10 @@ void loop() {
 }
 ```
 
-In the above example, an object *Sensor* is assumed.
-This *Sensor* is updated periodically (every *delayTimeInSeconds*).
+In the above example, an object `Sensor` is assumed.
+This `Sensor` is updated periodically (every `delayTimeInSeconds`). The calls to `Sensor` are completely non-blocking, i.e. they return immediately.
 
-See the **Simple** example (included with the library) for the complete code.
+See the [**Simple**](examples/Simple/Simple.ino) example (included with the library) for the complete code.
 
 ## *Synchronous* Example ##
 
@@ -101,8 +99,8 @@ Alternatively you can use Arduino's `Add .ZIP Library...` menu option.
 
 ## Documentation ##
 
-The library contains a folder *doc* for generated *html* documentation using [Doxygen](https://github.com/doxygen/doxygen) and some adaptions by [Velron](https://github.com/Velron/doxygen-bootstrapped).
+There's a copy of the [SHT1x datasheet](http://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/Humidity/Sensirion_Humidity_SHT1x_Datasheet_V5.pdf) from Sensirion in the folder `doc/`.
 
-In order to generate the documentation, simply execute `doxygen doc/doxygen/Doxyfile` from within the library folder.
+Additionally, the library contains a folder `doc/doxygen/` for  *html* documentation generated via [Doxygen](https://github.com/doxygen/doxygen) with some adaptions by [Velron](https://github.com/Velron/doxygen-bootstrapped).
 
-Additionally, there's a copy of the [SHT1x datasheet](http://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/Humidity/Sensirion_Humidity_SHT1x_Datasheet_V5.pdf) from Sensirion.
+In order to generate this documentation yourself, simply execute `doxygen doc/doxygen/Doxyfile` from within the `SensirionSHT/` folder.
