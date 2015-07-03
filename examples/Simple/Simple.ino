@@ -13,15 +13,15 @@ void setup() {
 }
 
 void loop() {
+  // update measurement
+  Sensor.tick(delayTime);
+
   // new values should occur every three seconds
   Serial.println(Sensor.getTemperature());
 
   /*
    * any other code can go here
    */
-
-  // update measurement
-  Sensor.tick(delayTime);
 
   // delay expects milliseconds
   delay(delayTime * 1000);

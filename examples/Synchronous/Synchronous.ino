@@ -1,8 +1,8 @@
 #include <Sensirion.h>        // http://playground.arduino.cc/Code/Sensirion
 #include <SensirionSHT.h>     // https://github.com/sekdiy/SensirionSHT
 
-// create an instance of SensirionSHT on pins 4 and 5
-SensirionSHT Sensor = SensirionSHT(4, 5);
+// create an instance of SensirionSHT on pins 4 and 5 with 3 seconds measurement intervals
+SensirionSHT Sensor = SensirionSHT(4, 5, 3);
 
 // one second delay between updates
 float period = 1.0f;
@@ -13,12 +13,21 @@ void setup() {
   Serial.begin(9600);
 }
 
+/**
+ * In this example the scheduling period differs from the measurement period.
+ *
+ * While the synchronous block below is executed every second, Sensor is set to take
+ * a new measurement every three seconds.
+ *
+ * This is to demonstrate how a real world, timing-sensitive device can be integrated into a fixed
+ * schedule.
+ */
 void loop() {
   // track current time
   float currentTime = millis() / 1000.0f;
   float duration = currentTime - lastTime;
 
-  // wait a whole period
+  // synchronous block, executed every period
   if (duration >= period) {
 
     // prepare for next cycle
@@ -48,7 +57,7 @@ void loop() {
       Serial.println("°C");
     }
 
-    // new values should arrive every three seconds
+    // new values should arrive about every three seconds
     if (!Sensor.isOutdated()) {
       Serial.println("Results are fresh! :)");
     }

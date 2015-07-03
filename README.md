@@ -28,7 +28,23 @@ void loop() {
 In the above example, an object `Sensor` is assumed.
 This `Sensor` is updated periodically (every `delayTimeInSeconds`). The calls to `Sensor` are completely non-blocking, i.e. they return immediately.
 
-See the [**Simple**](examples/Simple/Simple.ino) example (included with the library) for the complete code.
+See the [**Simple**](examples/Simple/Simple.ino) example (included with this library) for the complete code.
+
+## Multiple Sensors Example ##
+
+You could even use multiple sensors (connected to their respective clock and data pins):
+
+```c++
+// create a couple of SensirionSHT instances
+SensirionSHT Sensor1 = SensirionSHT(1, 2);
+SensirionSHT Sensor2 = SensirionSHT(3, 4);
+SensirionSHT Sensor3 = SensirionSHT(5, 6);
+...
+// update them all
+Sensor1.tick(duration);
+Sensor2.tick(duration);
+Sensor3.tick(duration);
+```
 
 ## *Synchronous* Example ##
 
@@ -40,7 +56,7 @@ void loop() {
   float currentTime = millis() / 1000.0f;
   float duration = currentTime - lastTime;
 
-  // wait a whole period
+  // synchronous block, executed every period
   if (duration >= period) {
 
     // prepare for next cycle
@@ -62,30 +78,15 @@ void loop() {
   }
 
   //
-  // anything running independent of the period goes here
+  // anything else goes here
   //
 
 }
 ```
 
-Here the sensor is polled for valid measurement data. The rest of the code is unaffected. **SensirionSHT** can be integrated with schedulers, timers, interrupt handlers, etc.
+Each of the calls to `Sensor` is actually checking for arrival of a [signal](https://en.wikipedia.org/wiki/Reactive_system), keeping the program from [spinning](https://en.wikipedia.org/wiki/Busy_waiting) while waiting for the sensor (as the SHT series can take a couple hundred milliseconds per measurement).
 
-## Multiple Sensors ##
-
-You could even use multiple sensors (connected to their respective clock and data pins):
-
-```c++
-// create a couple of SensirionSHT instances
-SensirionSHT Sensor1 = SensirionSHT(1, 2);
-SensirionSHT Sensor2 = SensirionSHT(3, 4);
-SensirionSHT Sensor3 = SensirionSHT(5, 6);
-...
-// update them all
-Sensor1.tick(duration);
-Sensor2.tick(duration);
-Sensor3.tick(duration);
-```
-
+See the [**Synchronous**](examples/Synchronous/Synchronous.ino) example (included with this library) and also the [**IrrigationController**](https://github.com/sekdiy/IrrigationController) project (where this library is being used with a scheduler, timers, interrupt handlers, real-time clock, etc.) for more.
 
 ## Installation ##
 
