@@ -1,54 +1,67 @@
 /**
  * Sensirion SHT library
  *
- * @author sekdiy
+ * This class provides non-blocking access to Sensirion SHT series temperature/humidity sensors (SHT1x and compatible).
+ *
+ * An SHT sensor connected to 'dataPin' and 'clockPin' (see sensor documentation) is polled every 'period' (default: 3s).
+ *
+ * The dedicated method 'tick(float duration)' has to be called periodically (e.g. every second) in order to update the values.
+ *
+ * @author sekdiy (https://github.com/sekdiy/SensirionSHT)
  * @date 02.07.2015
- * @version 3
+ * @version See git comments for changes.
  */
 
 #ifndef SENSIRIONSHT_H
 #define SENSIRIONSHT_H
 
-#include <Sensirion.h>                  // http://playground.arduino.cc/Code/Sensirion
-
-/**
- * SensirionSHT
- *
- * Provides non-blocking access to Sensirion SHT series temperature/humidity sensors (SHT1x and compatible).
- *
- * An SHT sensor connected to 'dataPin' and 'clockPin' (see sensor documentation) is polled every 'period' (default: 3s).
- *
- * The dedicated method 'tick(float duration)' has to be called periodically (e.g. every second) in order to update the values.
- */
 class SensirionSHT: public Sensirion
 {
   public:
-    SensirionSHT(unsigned int dataPin, unsigned int clockPin, float period = 3.0f);
 
-    bool hasTemperature();              // check for succesful temperature measurement cycle
-    bool hasHumidity();                 // check for succesful humidity measurement cycle
-    bool hasDewpoint();                 // check for succesful temperature and humidity measurement cycles
-    bool isOutdated();                  // check if last measurement cycle completed more than one tick ago
+    SensirionSHT(unsigned int dataPin,  //!< Arduino pin that the sensor's data line is connected to.
+                 unsigned int clockPin, //!< Arduino pin that the sensor's clock line is connected to.
+                 float period = 3.0f    //!< Measurement period (in seconds), since the sensor needs time to aquire a value.
+                );                      //!< Initializes instance attributes, enforcing a lower limit to the period duration.
 
-    float getTemperature();             // get calculated temperature
-    float getHumidity();                // get calculated humidity
-    float getDewpoint();                // get calculated dew point
+    bool hasTemperature();              //!< Checks for errors or invalid temperature measurement value. @return True iff a valid temperature result is available
+    bool hasHumidity();                 //!< Checks for errors or invalid humidity measurement value. @return True iff a valid humidity result is available
+    bool hasDewpoint();                 //!< Checks for errors or invalid dew point measurement value. @return True iff a valid dew point result is available
+    bool isOutdated();                  //!< Checks for errors or outdated results. @return False iff a valid new measurement result arrived within the most recent tick period.
 
-    unsigned int tick(float duration);  // update measurement
-    unsigned int getError();            // get most recent error
+    float getTemperature();             //!< Returns the current temperature value, only sensible if hasTemperature() returns true.
+    float getHumidity();                //!< Returns the current humidity value, only sensible if hasHumidity() returns true.
+    float getDewpoint();                //!< Returns the current dew point value, only sensible if hasTemperature() and hasHumidity() return true.
+
+    unsigned int getError();            //!< Returns the error from the last measurement (according to the definitions in the Sensirion library).
+
+    /** The tick() method does the actual work.
+     * A measurement cycle consists of an initial temperature measurement and a followup humidity measurement.
+     * For timing and accuracy information please see the documentation of your sensor.
+     *
+     * Once a period is completed, a new measurement cycle is started.
+     * As soon as a measurement result is available, the temperature value is stored and the humidity value is requested.
+     * Once the humidity value becomes available and has been stored too, the values are marked as fresh and we're ready for the next cycle.
+     *
+     * Call this method periodically and always provide the tick duration (time elapsed since the last call).
+     *
+     * @param   duration        The duration of the current tick period (in seconds).
+     * @return  An error value according to the definitions in the Sensirion library (i.e. 0 on succes).
+     */
+    unsigned int tick(float duration);
 
   protected:
-    bool _fresh = false;                // are fresh results in?
-    bool _ready = false;                // is measurement currently running?
+    bool _fresh = false;                //!< Are fresh results in?
+    bool _ready = false;                //!< Is measurement currently running?
 
-    float _period;                      // waiting period inbetween measurements
-    float _duration;                    // time waited during current period
-    float _temperature = NAN;           // calculated temperature
-    float _humidity = NAN;              // calculated humidity
+    float _period;                      //!< Waiting period inbetween measurements
+    float _duration;                    //!< Time waited during current period
+    float _temperature = NAN;           //!< Calculated temperature
+    float _humidity = NAN;              //!< Calculated humidity
 
-    unsigned int _mode;                 // measurement mode (TEMP or HUMI)
-    unsigned int _data;                 // raw measurement result
-    unsigned int _error;                // most recent error
+    unsigned int _mode;                 //!< Measurement mode (TEMP or HUMI)
+    unsigned int _data;                 //!< Raw measurement result
+    unsigned int _error;                //!< Most recent error
 };
 
 #endif  // SENSIRIONSHT_H

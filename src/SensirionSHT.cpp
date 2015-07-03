@@ -1,134 +1,51 @@
-/**
+/*
  * Sensirion SHT library
  *
- * @author sekdiy
- * @date 01.07.2015
- * @version 2
+ * Author: sekdiy
  */
 
-// Compatibility with the Arduino 1.0 library standard
-#if defined(ARDUINO) && ARDUINO >= 100
-#include "Arduino.h"
+#if ARDUINO > 100
+#include <Arduino.h>
 #else
-#include "WProgram.h"
+#include <WProgram.h>
 #endif
 
+#include <Sensirion.h>                                          // http://playground.arduino.cc/Code/Sensirion
 #include <SensirionSHT.h>
 
-/**
- * Constructor
- *
- * @param unsigned int dataPin
- * @param unsigned int clockPin
- * @param float period
- */
 SensirionSHT::SensirionSHT(unsigned int dataPin, unsigned int clockPin, float period)
   : Sensirion(dataPin, clockPin), _duration(period) {
   this->_period = (period >= 3.0f ? period : 3.0f);             // from experience, shorter periods can be problematic
 }
 
-/**
- * hasTemperature
- *
- * Checks for errors or invalid measurement value,
- * returns true iff a valid temperature result is available.
- *
- * @return bool
- */
 bool SensirionSHT::hasTemperature() {
   return !(this->_error || isnan(this->_temperature));          // no error and a valid temperature?
 }
 
-/**
- * getTemperature
- *
- * Returns the current temperature value,
- * only sensible if hasTemperature() returns true.
- *
- * @return float
- */
 float SensirionSHT::getTemperature() {
   return this->_temperature;                                    // return last temperature value
 }
 
-/**
- * hasHumidity
- *
- * Checks for errors or invalid measurement value,
- * returns true iff a valid humidity result is available.
- *
- * @return bool
- */
 bool SensirionSHT::hasHumidity() {
   return !(this->_error || isnan(this->_humidity));             // no error and a valid humidity?
 }
 
-/**
- * getHumidity
- *
- * Returns the current humidity value,
- * only sensible if hasHumidity() returns true.
- *
- * @return float
- */
 float SensirionSHT::getHumidity() {
   return this->_humidity;                                       // return last humidity value
 }
 
-/**
- * hasDewpoint
- *
- * Checks for errors or invalid measurement values,
- * returns true iff a valid dew point result is available.
- *
- * @return bool
- */
 bool SensirionSHT::hasDewpoint() {
   return this->hasTemperature() && this->hasHumidity();         // no error and valid temperature and humidity?
 }
 
-/**
- * getDewpoint
- *
- * Calculates the dew point from the current temperature and humidity values,
- * only sensible if hasDewpoint() returns true.
- *
- * @return float
- */
 float SensirionSHT::getDewpoint() {
   return this->calcDewpoint(this->_humidity, this->_temperature);   // return last dew point value
 }
 
-/**
- * isOutdated
- *
- * Checks for errors or outdated results,
- * returns false iff a valid new measurement result arrived within the most recent tick period.
- *
- * @return bool
- */
 bool SensirionSHT::isOutdated() {
-  return !(this->_error || this->_fresh);                       // return iff results aren't fresh any more
+  return !(this->_error || this->_fresh);                       // error or results aren't fresh any more?
 }
 
-/**
- * tick
- *
- * This method does the actual work.
- *
- * Periodically the tick duration counter is updated.
- * Once a period is completed, a new measurement cycle is started.
- * A measurement cycle consists of an initial temperature measurement and a followup humidity measurement.
- * For timing and accuracy information please see the documentation of your sensor.
- *
- * As soon as a measurement result is available, the temperature value is stored and the humidity value is requested.
- * Once the humidity value becomes available and has been stored too, the values are marked as 'fresh' and we're 'ready' for the next cycle.
- *
- * Returns zero on succesfull execution or an error value according to the definitions in the Sensirion library.
- *
- * @param float duration
- * @return unsigned int
- */
 unsigned int SensirionSHT::tick(float duration) {
   this->_duration += duration;                                  // update duration inbetween measurements
   this->_fresh = false;                                         // mark previous results as outdated
@@ -159,13 +76,6 @@ unsigned int SensirionSHT::tick(float duration) {
   return this->_error;                                          // pass on possible sensor communication errors
 }
 
-/**
- * getError
- *
- * Returns the last error state (according to the definitions in the Sensirion library).
- *
- * @return bool
- */
 unsigned int SensirionSHT::getError() {
     return this->_error;                                        // return most recent error
 }

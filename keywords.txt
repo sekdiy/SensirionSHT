@@ -17,7 +17,11 @@ getTemperature	 KEYWORD2
 getHumidity	 KEYWORD2
 getDewpoint	 KEYWORD2
 tick	 KEYWORD2
-isReady  KEYWORD2
+hasTemperature  KEYWORD2
+hasHumidity KEYWORD2
+hasDewpoint KEYWORD2
+isOutdated  KEYWORD2
+getError    KEYWORD2
 
 #######################################
 # Instances (KEYWORD2)
