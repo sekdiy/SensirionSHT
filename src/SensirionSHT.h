@@ -1,11 +1,6 @@
 /**
- * Sensirion SHT library
- *
- * This class provides non-blocking access to Sensirion SHT series temperature/humidity sensors (SHT1x and compatible).
- *
- * An SHT sensor connected to 'dataPin' and 'clockPin' (see sensor documentation) is polled every 'period' (default: 3s).
- *
- * The dedicated method 'tick(float duration)' has to be called periodically (e.g. every second) in order to update the values.
+ * SensirionSHT is an Arduino library that provides easy, non-blocking access to
+ * Sensirion SHT1x temperature and humidity sensors (and compatible).
  *
  * @author sekdiy (https://github.com/sekdiy/SensirionSHT)
  * @date 02.07.2015
@@ -16,7 +11,7 @@
 #define SENSIRIONSHT_H
 
 #include <math.h>
-#include <Sensirion.h>        // http://playground.arduino.cc/Code/Sensirion
+#include <Sensirion.h>                  // http://playground.arduino.cc/Code/Sensirion
 
 class SensirionSHT: public Sensirion {
   public:
@@ -47,7 +42,7 @@ class SensirionSHT: public Sensirion {
      *
      * Call this method periodically and always provide the tick duration (time elapsed since the last call).
      *
-     * @param   duration        The duration of the current tick period (in seconds).
+     * @param   duration    The duration of the current tick period (in seconds).
      * @return  An error value according to the definitions in the Sensirion library (i.e. 0 on succes).
      */
     unsigned int tick(float duration);

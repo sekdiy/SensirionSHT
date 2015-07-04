@@ -1,7 +1,7 @@
 /*
  * Sensirion SHT library
  *
- * Author: sekdiy
+ * Author: sekdiy (https://github.com/sekdiy/Relay)
  */
 
 #if ARDUINO > 100

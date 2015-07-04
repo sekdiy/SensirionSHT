@@ -2,7 +2,7 @@
 
 ## Purpose ##
 
-**SensirionSHT** is an Arduino library that provides easy,  non-blocking access to [Sensirion SHT1x](http://www.sensirion.com/en/products/humidity-temperature) temperature and humidity sensors (and compatible).
+**SensirionSHT** is an Arduino library that provides easy, non-blocking access to [Sensirion SHT1x](http://www.sensirion.com/en/products/humidity-temperature) temperature and humidity sensors (and compatible).
 
 ## Simple Example ##
 
@@ -84,24 +84,26 @@ void loop() {
 }
 ```
 
-Each of the calls to `Sensor` is actually checking for arrival of a [signal](https://en.wikipedia.org/wiki/Reactive_system), keeping the program from [spinning](https://en.wikipedia.org/wiki/Busy_waiting) while waiting for the sensor (as the SHT series can take a couple hundred milliseconds per measurement).
+The SHT series can take a couple hundred milliseconds per measurement (with it's [settling time](https://en.wikipedia.org/wiki/Settling_time) more in the order of seconds, anyway).
 
-See the [**Synchronous**](examples/Synchronous/Synchronous.ino) example (included with this library) and also the [**IrrigationController**](https://github.com/sekdiy/IrrigationController) project (where this library is being used with a scheduler, timers, interrupt handlers, real-time clock, etc.) for more.
+So each of the calls to `Sensor` is actually just checking for arrival of a [signal](https://en.wikipedia.org/wiki/Reactive_system), keeping the program from [spinning](https://en.wikipedia.org/wiki/Busy_waiting) while waiting for the sensor.
+
+See the [**Synchronous**](examples/Synchronous/Synchronous.ino) example (included with this library) and maybe also the [**IrrigationController**](https://github.com/sekdiy/IrrigationController) project (where this library is being used with a scheduler, timers, interrupt handlers, real-time clock, etc.) for more.
 
 ## Installation ##
 
-Just check out the [**SensirionSHT**](https://github.com/sekdiy/SensirionSHT) Repository on GitHub (or download the ZIP archive) and copy it to your Arduino's library folder (usually a folder called 'libraries' within your Arduino sketchbook).
+Just check out the [**SensirionSHT**](https://github.com/sekdiy/SensirionSHT) Repository on GitHub (or download the ZIP archive) and copy it to your `libraries/` folder (usually within your Arduino sketchbook).
 
 Now do the same with the [**Sensirion**](http://playground.arduino.cc/Code/Sensirion) library by Markus Schatzl and Carl Jackson, since **SensirionSHT** extends (and thus requires) it.
 
 After (re)launching the Arduino IDE, **SensirionSHT** (as well as **Sensirion**) will appear in your Sketchbook/Examples menu.
 
-Alternatively you can use Arduino's `Add .ZIP Library...` menu option.
+Alternatively, you can use Arduino's `Add .ZIP Library...` menu option.
 
 ## Documentation ##
 
 There's a copy of the [SHT1x datasheet](http://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/Humidity/Sensirion_Humidity_SHT1x_Datasheet_V5.pdf) from Sensirion in the folder `doc/`.
 
-Additionally, the library contains a folder `doc/doxygen/` for  *html* documentation generated via [Doxygen](https://github.com/doxygen/doxygen) with some adaptions by [Velron](https://github.com/Velron/doxygen-bootstrapped).
+Additionally, the library contains a folder `doc/doxygen/` for  *html* documentation generated via [Doxygen](https://github.com/doxygen/doxygen) (with some adaptions by [Velron](https://github.com/Velron/doxygen-bootstrapped)).
 
-In order to generate this documentation yourself, simply execute `doxygen doc/doxygen/Doxyfile` from within the `SensirionSHT/` folder.
+In order to generate this documentation yourself, simply execute `doxygen doc/doxygen/Doxyfile` from within the main library folder `SensirionSHT/`.
