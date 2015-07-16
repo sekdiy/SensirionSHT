@@ -18,9 +18,10 @@ void setup() {
  *
  * While the synchronous block below is executed every second, Sensor is set to take
  * a new measurement every three seconds.
+ * The fixed 'scheduler' (the loop function) waits for events from Sensor, then reacts.
  *
- * This is to demonstrate how a real world, timing-sensitive device can be integrated into a fixed
- * schedule.
+ * This is to demonstrate how a real world, timing-sensitive device like SensirionSHT
+ * can be integrated into a reactive system.
  */
 void loop() {
   // track current time
