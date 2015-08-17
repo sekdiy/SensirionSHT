@@ -45,7 +45,7 @@ float SensirionSHT::getDewpoint() {
 }
 
 bool SensirionSHT::isOutdated() {
-  return !(this->_error || this->_fresh);                       //!< error or results aren't fresh any more?
+  return (this->_error || !this->_fresh);                       //!< error or results aren't fresh any more?
 }
 
 unsigned int SensirionSHT::tick(float duration) {
@@ -79,5 +79,5 @@ unsigned int SensirionSHT::tick(float duration) {
 }
 
 unsigned int SensirionSHT::getError() {
-    return this->_error;                                        //!< return most recent error
+      return this->_error;                                        //!< return most recent error
 }

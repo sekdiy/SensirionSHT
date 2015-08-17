@@ -1,6 +1,9 @@
 #include <Sensirion.h>        // http://playground.arduino.cc/Code/Sensirion
 #include <SensirionSHT.h>     // https://github.com/sekdiy/SensirionSHT
 
+// project constants
+const float defaultValue = -999.99f;
+
 // create an instance of SensirionSHT on pins 4 and 5 with 3 seconds measurement intervals
 SensirionSHT Sensor = SensirionSHT(4, 5, 3);
 
@@ -41,27 +44,30 @@ void loop() {
     if (Sensor.hasTemperature()) {
       Serial.print("current temperature: ");
       Serial.print(Sensor.getTemperature());
-      Serial.println("°C");
+      Serial.print("°C, ");
     }
 
     // check for valid humidity data
     if (Sensor.hasHumidity()) {
       Serial.print("current humidity: ");
       Serial.print(Sensor.getHumidity());
-      Serial.println("%");
+      Serial.print("%, ");
     }
 
     // check for valid dew point data
     if (Sensor.hasDewpoint()) {
       Serial.print("current dew point: ");
       Serial.print(Sensor.getDewpoint());
-      Serial.println("°C");
+      Serial.print("°C, ");
     }
 
     // new values should arrive about every three seconds
-    if (!Sensor.isOutdated()) {
-      Serial.println("Results are fresh! :)");
-    }
+    Serial.print("results are ");
+    Serial.print(Sensor.isOutdated() ? "outdated" : "fresh");
+    Serial.print(", error code: ");
+    Serial.print(Sensor.getError());
+    Serial.println(".");
+
 
     /*
      * anything that should run every period can go here
