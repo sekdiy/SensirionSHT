@@ -100,6 +100,14 @@ After (re)launching the Arduino IDE, **SensirionSHT** (as well as **Sensirion**)
 
 Alternatively, you can use Arduino's `Add .ZIP Library...` menu option.
 
+## Calibration ##
+
+These sensors come pre-calibrated, the manufacturer provides a [certificate](doc/Sensirion_Humidity_SHTxx_Calibration_Certification.pdf).
+Nevertheless, depending on the intended application it never hurts to check individual sensor accuracy before relying on it.
+
+I'm currently working on a tool that supports sensor calibration and linearisation.
+Until then, I recommend Robert J. Smith's thorough [comparison](http://www.kandrsmith.org/RJS/Misc/hygrometers.html) of various hygrometers. He also provides a detailed explanation how to [calibrate](http://www.kandrsmith.org/RJS/Misc/Hygrometers/calib_many.html) such a sensor.
+
 ## Documentation ##
 
 There's a copy of the [SHT1x datasheet](http://www.sensirion.com/fileadmin/user_upload/customers/sensirion/Dokumente/Humidity/Sensirion_Humidity_SHT1x_Datasheet_V5.pdf) from Sensirion in the folder `doc/`.
