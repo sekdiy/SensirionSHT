@@ -1,4 +1,4 @@
-# Sekdiy SensirionSHT Library [![Build Status](https://travis-ci.org/sekdiy/SensirionSHT.svg?branch=master)](https://travis-ci.org/sekdiy/SensirionSHT)
+# Sekdiy SensirionSHT Library [![Version](https://img.shields.io/badge/SensirionSHT-0.1.2-blue.svg 'still in beta')](https://github.com/sekdiy/SensirionSHT) [![Build Status](https://travis-ci.org/sekdiy/SensirionSHT.svg?branch=master)](https://travis-ci.org/sekdiy/SensirionSHT)
 
 ## Purpose ##
 
